@@ -1,6 +1,10 @@
 Monocle = {}
 function Monocle.new(initial)
 	Monocle.active = initial.isActive or false
+	Monocle.useerrhand = initial.useErrorHandler or false
+	if Monocle.useerrhand then
+		love.errhand = Monocle.errhand
+	end
 	Monocle.listeners = {}
 	Monocle.results = {}
 
@@ -120,7 +124,7 @@ local function error_printer(msg, layer)
 	print((debug.traceback("Error: " .. tostring(msg), 1+(layer or 1)):gsub("\n[^\n]+$", "")))
 end
 
-function love.errhand(msg)
+function Monocle.errhand(msg)
 	msg = tostring(msg)
 
 	error_printer(msg, 2)
